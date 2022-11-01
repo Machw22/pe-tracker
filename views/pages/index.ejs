@@ -5,9 +5,15 @@
 <meta charset="UTF-8">
 </head>
 <body>
-<h1>Hello World at <%= time %>!</h1>
+<h1>Hello World!</h1>
 
-<button id="ping" onclick="javascript:send('ping');">Ping</button>
+<% buttons.forEach(function(b) { %>
+    <button id="<%= b.id %>" onclick="javascript:send( <%= b.id %> );">
+        <%= b.name%>
+    </button>
+<% }); %>
+
+
 <p id="output"></p>
 <script>
 const output = document.getElementById("output");
@@ -29,7 +35,7 @@ const send = async function(buttonId) {
         output.innerHTML = `<strong>ERROR: ${result.error}</strong>`;  
     }
     else {
-        output.innerHTML = `Pong at ${result.time}`;
+        output.innerHTML = `Created button ${result.newId.new_id} at ${result.when.localtime}. Refresh to view them all!`;
     }
     
 };
