@@ -1,0 +1,27 @@
+{
+  "name": "pe-tracker",
+  "version": "1.0.0",
+  "description": "Student Instructor Observation Tool\r mreams1@student.cvtc.edu",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Machw22/pe-tracker.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Machw22/pe-tracker/issues"
+  },
+  "homepage": "https://github.com/Machw22/pe-tracker#readme",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "ejs": "^3.1.8",
+    "express": "^4.18.2",
+    "path": "^0.12.7",
+    "pg": "^8.8.0"
+  }
+}
