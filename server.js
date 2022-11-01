@@ -11,8 +11,16 @@ express()
     .set("view engine", "ejs")
     .get("/", async(req, res) => {
         const args = {
-            times: [0, Date.now(), Date.now() + 1000]
+            time: Date.now()
         };
         res.render("pages/index", args);
+    })
+    .post("/log", async(req, res) => {
+        res.set({
+            "Content-Type": "application/json"
+        });
+        res.json({
+            time: Date.now()
+        });
     })
     .listen(PORT, () => console.log(`Listening on ${PORT}`)); 
