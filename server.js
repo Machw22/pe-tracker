@@ -21,9 +21,13 @@ express()
         try {
             const client = await pool.connect();
             const buttonSql = "SELECT * FROM buttons ORDER BY id ASC;";
+            const counterSql = "SELECT * FROM counter ORDER BY id ASC;";
             const buttons = await client.query(buttonSql);
+            const counter = await client.query(counterSql);
             const args = {
-                "buttons": buttons ? buttons.rows : null
+                "buttons": buttons ? buttons.rows : null,
+                "counter": counter ? counter.rows : null
+
             };
             res.render("pages/index", args);
         }
@@ -37,8 +41,6 @@ express()
             });
         }
 
-
-        
         
     })
     .post("/log", async(req, res) => {
@@ -49,18 +51,38 @@ express()
         try {
             const client = await pool.connect();
             const id = req.body.id;
-            const insertSql = `INSERT INTO buttons (name)
-                VALUES (concat('Child of ', $1::text))
-                RETURNING id AS new_id;`;
-            const selectSql = "SELECT LOCALTIME;";
-            const insert = await client.query(insertSql, [id]);
-            const select = await client.query(selectSql);
 
-            const response = {
-                newId: insert ? insert.rows[0] : null,
-                when: select ? select.rows[0] : null
-            };
-            res.json(response);
+            if(id == 1) {
+                const updateSql = `UPDATE counter SET count = count + 1 WHERE Id = 1 RETURNING name, count AS counter;`;
+                const update = await client.query(updateSql);
+                const response = {
+                   up: update ? update.rows[0] : null
+                };
+                res.json(response);
+
+            }
+
+            if(id == 2) {
+                const updateSql = `UPDATE counter SET count = count + 1 WHERE Id = 2 RETURNING name, count AS counter;`;
+                const update = await client.query(updateSql);
+                const response = {
+                   up: update ? update.rows[0] : null
+                };
+                res.json(response);
+
+            }
+
+            if(id == 3) {
+                const updateSql = `UPDATE counter SET count = 0 RETURNING count AS counter;`;
+                const update = await client.query(updateSql);
+                const response = {
+                   up: update ? update.rows[0] : null
+                };
+                response.up.name = "reset";
+                res.json(response);
+
+            }
+            
             client.release();
         }
         catch (err) {

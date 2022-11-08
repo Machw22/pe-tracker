@@ -6,6 +6,12 @@
 </head>
 <body>
 <h1>Hello World!</h1>
+<p>
+<span id="praise"><%= counter[0].count %></span>
+
+<span id="criticize"><%= counter[1].count %></span>
+
+</p>
 
 <% buttons.forEach(function(b) { %>
     <button id="<%= b.id %>" onclick="javascript:send( <%= b.id %> );">
@@ -22,7 +28,7 @@ const send = async function(buttonId) {
         method: "POST",
         headers: {
             "Accept": "application/json",
-            "Content-Type": "application/json" 
+            "Content-Type": "application/json"  
         },
         body: JSON.stringify({
             id: buttonId
@@ -35,7 +41,19 @@ const send = async function(buttonId) {
         output.innerHTML = `<strong>ERROR: ${result.error}</strong>`;  
     }
     else {
-        output.innerHTML = `Created button ${result.newId.new_id} at ${result.when.localtime}. Refresh to view them all!`;
+        if (result.up.name == "Praise") {
+            praise.innerHTML = result.up.counter;
+        } 
+
+        if (result.up.name == "Criticize") {
+            criticize.innerHTML = result.up.counter;
+        }
+
+        if (result.up.name == "reset") {
+            praise.innerHTML = result.up.counter;
+            criticize.innerHTML = result.up.counter;
+        }
+
     }
     
 };
